@@ -267,6 +267,22 @@ try {
   $metaPath = Join-Path $OutputDir "page_background_colour.txt"
   "Page background colour: $PageBgHex" | Out-File -Encoding utf8 -FilePath $metaPath -Force
 
+  # 6) Write Entra admin centre CSS helper snippet
+  $cssPath = Join-Path $OutputDir "entra_branding.css"
+  $cssContent = @'
+:root {
+  --fontStack-monospace: "Monaspace Neon", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --tab-size-preference: 4;
+}
+
+pre,
+code {
+  tab-size: var(--tab-size-preference);
+  font-family: var(--fontStack-monospace);
+}
+'@
+  Set-Content -LiteralPath $cssPath -Value $cssContent -Encoding UTF8
+
   Write-Host "All assets generated in: $OutputDir" -ForegroundColor Green
 }
 finally {
